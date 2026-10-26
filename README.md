@@ -1,6 +1,4 @@
-# Studio Seoyeon Vercel v104
+Studio Seoyeon final GitHub Pages package
 
-TikTok thumbnails are proxied through:
-`/api/tiktok-thumbnail?image=1&url=...`
-
-Upload/replace these files in GitHub, then let Vercel redeploy.
+Upload ALL files and the images folder to the repository root.
+Pages: main branch / (root).
