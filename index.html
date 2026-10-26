@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<title>STUDIO SEOYEON · Creator Media Kit</title>
+<title>STUDIO SEOYEON</title>
 <style>
 :root{
   --cream:#fffdf9; --paper:#fff; --lav:#b8a4e6; --lav2:#8a73c2;
@@ -2516,6 +2516,30 @@ body.modal-open{
     object-fit:contain !important;
   }
 }
+
+/* v113 final dropdown behavior */
+header .nav-dropdown .nav-dropdown-menu{
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+header .nav-dropdown.open .nav-dropdown-menu{
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+
+@media (max-width:800px){
+  header .nav-dropdown .nav-dropdown-menu{
+    display:none !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:auto !important;
+  }
+  header .nav-dropdown.open .nav-dropdown-menu{
+    display:flex !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -2875,43 +2899,6 @@ document.querySelectorAll('.platform-card').forEach(card => {
 })();
 </script><script>
 (() => {
-  const dropdowns = [...document.querySelectorAll('.nav-dropdown')];
-
-  const closeAll = (except = null) => {
-    dropdowns.forEach(d => {
-      if (d !== except) d.classList.remove('open');
-    });
-  };
-
-  dropdowns.forEach(dropdown => {
-    const toggle = dropdown.querySelector('.nav-dropdown-toggle');
-    if (!toggle) return;
-
-    toggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const willOpen = !dropdown.classList.contains('open');
-      closeAll(dropdown);
-      dropdown.classList.toggle('open', willOpen);
-    });
-
-    dropdown.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        dropdown.classList.remove('open');
-      });
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-dropdown')) closeAll();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeAll();
-  });
-})();
-</script><script>
-(() => {
   async function loadTikTokThumb(el) {
     const url = el.dataset.tiktokUrl;
     if (!url) return;
@@ -2938,64 +2925,101 @@ document.querySelectorAll('.platform-card').forEach(card => {
 </script><script>
 (() => {
   const nav = document.querySelector('header nav');
-  const btn = document.querySelector('.mobile-menu-toggle');
   const menu = document.querySelector('header .menu');
-  if (!nav || !btn || !menu) return;
+  const mobileBtn = document.querySelector('.mobile-menu-toggle');
+  const dropdowns = [...document.querySelectorAll('header .nav-dropdown')];
 
-  const closeAllDropdowns = () => {
-    menu.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
+  if (!nav || !menu) return;
+
+  const isMobile = () => window.matchMedia('(max-width: 800px)').matches;
+
+  const closeDropdowns = (except = null) => {
+    dropdowns.forEach(d => {
+      if (d !== except) d.classList.remove('open');
+    });
   };
 
-  const closeMenu = () => {
+  const closeMobileMenu = () => {
     menu.classList.remove('mobile-open');
-    closeAllDropdowns();
-    btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-label', '메뉴 열기');
-    btn.textContent = '☰';
+    closeDropdowns();
+    if (mobileBtn) {
+      mobileBtn.setAttribute('aria-expanded', 'false');
+      mobileBtn.setAttribute('aria-label', '메뉴 열기');
+      mobileBtn.textContent = '☰';
+    }
   };
 
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const open = !menu.classList.contains('mobile-open');
-    if (open) {
-      menu.classList.add('mobile-open');
-      btn.setAttribute('aria-expanded', 'true');
-      btn.setAttribute('aria-label', '메뉴 닫기');
-      btn.textContent = '×';
-    } else {
-      closeMenu();
-    }
-  });
-
-  menu.querySelectorAll('.nav-dropdown-toggle').forEach(toggle => {
-    toggle.addEventListener('click', (e) => {
-      if (window.innerWidth > 800) return;
+  if (mobileBtn) {
+    mobileBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const dropdown = toggle.closest('.nav-dropdown');
+
+      const willOpen = !menu.classList.contains('mobile-open');
+      if (willOpen) {
+        menu.classList.add('mobile-open');
+        mobileBtn.setAttribute('aria-expanded', 'true');
+        mobileBtn.setAttribute('aria-label', '메뉴 닫기');
+        mobileBtn.textContent = '×';
+      } else {
+        closeMobileMenu();
+      }
+    });
+  }
+
+  dropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
       const willOpen = !dropdown.classList.contains('open');
-      closeAllDropdowns();
+      closeDropdowns(dropdown);
       dropdown.classList.toggle('open', willOpen);
+    });
+
+    dropdown.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        dropdown.classList.remove('open');
+        if (isMobile()) closeMobileMenu();
+      });
     });
   });
 
-  menu.querySelectorAll('a').forEach(link => {
+  menu.querySelectorAll(':scope > a').forEach(link => {
     link.addEventListener('click', () => {
-      if (window.innerWidth <= 800) closeMenu();
+      if (isMobile()) closeMobileMenu();
     });
   });
 
   document.addEventListener('click', (e) => {
-    if (window.innerWidth <= 800 &&
+    if (!e.target.closest('header .nav-dropdown')) {
+      closeDropdowns();
+    }
+    if (isMobile() &&
         menu.classList.contains('mobile-open') &&
         !nav.contains(e.target)) {
-      closeMenu();
+      closeMobileMenu();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDropdowns();
+      if (isMobile()) closeMobileMenu();
     }
   });
 
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 800) closeMenu();
+    if (!isMobile()) {
+      menu.classList.remove('mobile-open');
+      if (mobileBtn) {
+        mobileBtn.setAttribute('aria-expanded', 'false');
+        mobileBtn.textContent = '☰';
+      }
+      closeDropdowns();
+    }
   });
 })();
 </script></body>
