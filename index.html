@@ -2844,6 +2844,32 @@ header .nav-dropdown.open .nav-dropdown-menu{
     overflow:hidden !important;
   }
 }
+
+/* v117 desktop dropdown restore */
+@media (min-width:801px){
+  header .menu .nav-dropdown{
+    position:relative !important;
+  }
+
+  header .menu .nav-dropdown .nav-dropdown-menu{
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+
+  header .menu .nav-dropdown.open .nav-dropdown-menu{
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:auto !important;
+  }
+
+  /* prevent hover-only behavior from fighting click behavior */
+  header .menu .nav-dropdown:not(.open):hover .nav-dropdown-menu{
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -3295,6 +3321,58 @@ document.querySelectorAll('.platform-card').forEach(card => {
 
   window.addEventListener('resize', () => {
     if (window.innerWidth > 800) closeDrawer();
+  });
+})();
+</script><script>
+/* desktop-dropdown-v117 */
+(() => {
+  const desktopDropdowns = [...document.querySelectorAll('header .menu .nav-dropdown')];
+
+  const isDesktop = () => window.innerWidth > 800;
+
+  const closeDesktopDropdowns = (except = null) => {
+    desktopDropdowns.forEach(d => {
+      if (d !== except) d.classList.remove('open');
+    });
+  };
+
+  desktopDropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', (e) => {
+      if (!isDesktop()) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const willOpen = !dropdown.classList.contains('open');
+      closeDesktopDropdowns(dropdown);
+      dropdown.classList.toggle('open', willOpen);
+    });
+
+    dropdown.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (isDesktop()) dropdown.classList.remove('open');
+      });
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!isDesktop()) return;
+    if (!e.target.closest('header .menu .nav-dropdown')) {
+      closeDesktopDropdowns();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isDesktop()) {
+      closeDesktopDropdowns();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (!isDesktop()) closeDesktopDropdowns();
   });
 })();
 </script></body>
