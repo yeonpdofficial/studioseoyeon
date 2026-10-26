@@ -1990,6 +1990,251 @@ body.modal-open{
     white-space:normal;
   }
 }
+
+/* v99 unified nav sizing + click dropdowns */
+.menu{
+  display:flex !important;
+  align-items:center !important;
+  gap:28px !important;
+}
+.menu > a,
+.nav-dropdown-toggle{
+  border:0 !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+  color:#6f6877 !important;
+  font-family:inherit !important;
+  font-size:13px !important;
+  line-height:1 !important;
+  font-weight:600 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+  cursor:pointer !important;
+  appearance:none !important;
+}
+.menu > a:hover,
+.nav-dropdown-toggle:hover,
+.nav-dropdown.open > .nav-dropdown-toggle{
+  color:#2f2737 !important;
+}
+.nav-dropdown{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  height:74px !important;
+}
+.nav-dropdown-toggle::after{
+  content:"▾";
+  margin-left:6px;
+  font-size:9px;
+  color:#8a7fa0;
+}
+.nav-dropdown-menu{
+  position:absolute !important;
+  top:58px !important;
+  left:50% !important;
+  transform:translateX(-50%) translateY(6px) !important;
+  min-width:132px !important;
+  padding:8px !important;
+  border:1px solid #e8ddf5 !important;
+  border-radius:16px !important;
+  background:#fff !important;
+  box-shadow:0 18px 40px rgba(92,74,132,.14) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:4px !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  transition:opacity .18s ease, transform .18s ease, visibility .18s ease !important;
+  z-index:1000 !important;
+}
+.nav-dropdown.open .nav-dropdown-menu{
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:translateX(-50%) translateY(0) !important;
+}
+.nav-dropdown-menu a{
+  display:block !important;
+  padding:10px 12px !important;
+  border-radius:10px !important;
+  color:#5d5468 !important;
+  font-family:inherit !important;
+  font-size:12px !important;
+  line-height:1.2 !important;
+  font-weight:700 !important;
+  letter-spacing:.10em !important;
+  text-transform:uppercase !important;
+  white-space:nowrap !important;
+}
+.nav-dropdown-menu a:hover{
+  background:#f5effd !important;
+  color:#6e58a6 !important;
+}
+
+.tiktok-auto-thumb.loaded > img{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block !important;
+  z-index:1 !important;
+}
+.tiktok-auto-thumb.loaded .tiktok-fallback,
+.tiktok-auto-thumb.loaded .celebrity-fallback{
+  display:none !important;
+}
+.tiktok-auto-thumb .short-platform,
+.tiktok-auto-thumb .celebrity-badge{
+  z-index:3 !important;
+}
+
+/* v100 perfectly aligned top nav */
+.menu{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center;
+  gap:32px !important;
+  height:74px !important;
+}
+.menu > a,
+.nav-dropdown{
+  height:74px !important;
+  display:flex !important;
+  align-items:center !important;
+}
+.menu > a,
+.nav-dropdown-toggle{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  height:74px !important;
+  min-height:74px !important;
+  line-height:74px !important;
+  padding:0 !important;
+  margin:0 !important;
+  vertical-align:middle !important;
+  box-sizing:border-box !important;
+}
+.nav-dropdown-toggle{
+  gap:5px !important;
+}
+.nav-dropdown-toggle::after{
+  display:inline-block !important;
+  margin-left:0 !important;
+  line-height:1 !important;
+  transform:translateY(-1px);
+}
+
+
+/* v101 identical dropdown sizing */
+.nav-dropdown-menu{
+  width:146px !important;
+  min-width:146px !important;
+  max-width:146px !important;
+  padding:10px !important;
+  gap:4px !important;
+  box-sizing:border-box !important;
+}
+.nav-dropdown-menu a{
+  width:100% !important;
+  min-height:38px !important;
+  padding:0 10px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  box-sizing:border-box !important;
+  line-height:1 !important;
+}
+
+
+/* v102 force identical dropdown vertical position */
+.menu .nav-dropdown .nav-dropdown-menu,
+.menu .other-dropdown .nav-dropdown-menu{
+  top:58px !important;
+  bottom:auto !important;
+  margin-top:0 !important;
+  transform:translateX(-50%) translateY(6px) !important;
+}
+.menu .nav-dropdown.open .nav-dropdown-menu,
+.menu .other-dropdown.open .nav-dropdown-menu{
+  top:58px !important;
+  transform:translateX(-50%) translateY(0) !important;
+}
+
+
+/* v103 truly identical ADS / OTHER dropdown geometry */
+.menu .nav-dropdown,
+.menu .other-dropdown{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  height:74px !important;
+  min-height:74px !important;
+  max-height:74px !important;
+  padding:0 !important;
+  margin:0 !important;
+  box-sizing:border-box !important;
+}
+
+.menu .nav-dropdown > .nav-dropdown-toggle,
+.menu .other-dropdown > .nav-dropdown-toggle{
+  height:74px !important;
+  min-height:74px !important;
+  max-height:74px !important;
+  padding:0 !important;
+  margin:0 !important;
+  line-height:74px !important;
+}
+
+.menu .nav-dropdown > .nav-dropdown-menu,
+.menu .other-dropdown > .nav-dropdown-menu{
+  top:60px !important;
+  left:50% !important;
+  bottom:auto !important;
+  margin:0 !important;
+  width:146px !important;
+  min-width:146px !important;
+  max-width:146px !important;
+  min-height:100px !important;
+  max-height:100px !important;
+  height:100px !important;
+  padding:10px !important;
+  gap:4px !important;
+  box-sizing:border-box !important;
+  transform:translateX(-50%) translateY(6px) !important;
+}
+
+.menu .nav-dropdown.open > .nav-dropdown-menu,
+.menu .other-dropdown.open > .nav-dropdown-menu{
+  top:60px !important;
+  transform:translateX(-50%) translateY(0) !important;
+}
+
+.menu .nav-dropdown > .nav-dropdown-menu > a,
+.menu .other-dropdown > .nav-dropdown-menu > a{
+  height:38px !important;
+  min-height:38px !important;
+  max-height:38px !important;
+  padding:0 10px !important;
+  margin:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  line-height:1 !important;
+  box-sizing:border-box !important;
+}
+
+/* Disable old hover geometry behavior; click-open only */
+.menu .nav-dropdown:not(.open):hover > .nav-dropdown-menu,
+.menu .other-dropdown:not(.open):hover > .nav-dropdown-menu{
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -2083,48 +2328,6 @@ document.querySelectorAll('.platform-card').forEach(card => {
 
   render();
   restart();
-})();
-</script><script>
-(() => {
-  const thumbs = document.querySelectorAll('.tiktok-auto-thumb');
-  thumbs.forEach(async (el) => {
-    const url = el.dataset.tiktokUrl;
-    if (!url) return;
-    try {
-      const endpoint = 'https://www.tiktok.com/oembed?url=' + encodeURIComponent(url);
-      const res = await fetch(endpoint);
-      if (!res.ok) return;
-      const data = await res.json();
-      if (!data.thumbnail_url) return;
-      const img = document.createElement('img');
-      img.src = data.thumbnail_url;
-      img.alt = 'TikTok 광고 썸네일';
-      img.loading = 'lazy';
-      img.onload = () => el.classList.add('loaded');
-      el.insertBefore(img, el.firstChild);
-    } catch (e) {
-      // fallback poster remains visible
-    }
-  });
-})();
-</script><script>
-(() => {
-  document.querySelectorAll('#celebrity-collabs .tiktok-auto-thumb').forEach(async (el) => {
-    const url = el.dataset.tiktokUrl;
-    if (!url) return;
-    try {
-      const res = await fetch('https://www.tiktok.com/oembed?url=' + encodeURIComponent(url));
-      if (!res.ok) return;
-      const data = await res.json();
-      if (!data.thumbnail_url) return;
-      const img = document.createElement('img');
-      img.src = data.thumbnail_url;
-      img.alt = 'TikTok collaboration thumbnail';
-      img.loading = 'lazy';
-      img.onload = () => el.classList.add('loaded');
-      el.insertBefore(img, el.firstChild);
-    } catch(e) {}
-  });
 })();
 </script><script>
 (() => {
@@ -2391,29 +2594,65 @@ document.querySelectorAll('.platform-card').forEach(card => {
 })();
 </script><script>
 (() => {
-  const other = document.querySelector('.other-dropdown');
-  if (!other) return;
-  const toggle = other.querySelector('.nav-dropdown-toggle');
-  const menu = other.querySelector('.nav-dropdown-menu');
-  if (!toggle || !menu) return;
+  const dropdowns = [...document.querySelectorAll('.nav-dropdown')];
 
-  toggle.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    other.classList.toggle('open');
-  });
+  const closeAll = (except = null) => {
+    dropdowns.forEach(d => {
+      if (d !== except) d.classList.remove('open');
+    });
+  };
 
-  menu.addEventListener('click', (e) => {
-    e.stopPropagation();
+  dropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const willOpen = !dropdown.classList.contains('open');
+      closeAll(dropdown);
+      dropdown.classList.toggle('open', willOpen);
+    });
+
+    dropdown.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        dropdown.classList.remove('open');
+      });
+    });
   });
 
   document.addEventListener('click', (e) => {
-    if (!other.contains(e.target)) other.classList.remove('open');
+    if (!e.target.closest('.nav-dropdown')) closeAll();
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') other.classList.remove('open');
+    if (e.key === 'Escape') closeAll();
   });
+})();
+</script><script>
+(() => {
+  async function loadTikTokThumb(el) {
+    const url = el.dataset.tiktokUrl;
+    if (!url) return;
+
+    try {
+      const res = await fetch('/api/tiktok-thumbnail?url=' + encodeURIComponent(url));
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.thumbnail_url) return;
+
+      const img = document.createElement('img');
+      img.src = data.thumbnail_url;
+      img.alt = 'TikTok thumbnail';
+      img.loading = 'lazy';
+      img.onload = () => el.classList.add('loaded');
+      el.insertBefore(img, el.firstChild);
+    } catch (e) {
+      // Keep fallback poster visible.
+    }
+  }
+
+  document.querySelectorAll('.tiktok-auto-thumb').forEach(loadTikTokThumb);
 })();
 </script></body>
 </html>
