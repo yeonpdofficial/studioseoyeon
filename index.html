@@ -2540,6 +2540,57 @@ header .nav-dropdown.open .nav-dropdown-menu{
     display:flex !important;
   }
 }
+
+/* v114 mobile dropdown placement fix */
+@media (max-width:800px){
+  header .menu .nav-dropdown{
+    display:block !important;
+    width:100% !important;
+    position:relative !important;
+  }
+
+  header .menu .nav-dropdown-toggle{
+    width:100% !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+  }
+
+  header .menu .nav-dropdown-menu{
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    transform:none !important;
+    width:calc(100% - 24px) !important;
+    min-width:0 !important;
+    max-width:none !important;
+    height:auto !important;
+    margin:0 12px 8px !important;
+    padding:6px 8px !important;
+    box-sizing:border-box !important;
+    border-radius:12px !important;
+    background:#f7f2fc !important;
+  }
+
+  header .menu .nav-dropdown.open .nav-dropdown-menu{
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  header .menu .nav-dropdown-menu a{
+    width:100% !important;
+    height:38px !important;
+    min-height:38px !important;
+    padding:0 10px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    box-sizing:border-box !important;
+  }
+}
+
 </style>
 </head>
 <body>
